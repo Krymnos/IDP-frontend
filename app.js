@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var ExpressCassandra = require('express-cassandra');
 
 
 var index = require('./routes/index');
@@ -33,29 +32,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-ExpressCassandra.setDirectory( __dirname + '/models').bind(
-    {
-        clientOptions: {
-            contactPoints: ['127.0.0.1'],
-            protocolOptions: { port: 32768 },
-            keyspace: 'provenance',
-            queryOptions: {consistency: ExpressCassandra.consistencies.one}
-        },
-        ormOptions: {
-            defaultReplicationStrategy : {
-                class: 'SimpleStrategy',
-                replication_factor: 1
-            },
-            migration: 'safe'
-        }
-    },
-    function(err) {
-      console.log("could not establish connection with cassandra");
-        if(err) throw err;
-
-    }
-);
 
 
 
