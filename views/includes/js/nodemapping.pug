@@ -1,0 +1,39 @@
+// Custom scripts for all pages
+script(type='text/javascript').
+    // Pass as regular array here
+    var nodes = new vis.DataSet(JSON.parse('!{nodes}'));
+    var edges = new vis.DataSet(JSON.parse('!{edges}'));
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {
+        interaction: {
+            dragNodes: false,
+            dragView: false,
+        },
+        autoResize: false,
+        height: '400px',
+        layout: {
+            hierarchical: {
+                direction: 'LR',
+            }
+        },
+        edges: {
+            smooth: {
+                type: 'cubicBezier',
+                forceDirection: 'horizontal',
+                roundness: 0.3
+            }
+        },
+    };
+    var network = new vis.Network(container, data, options);
+
+    network.on('click', function (properties) {
+        var ids = properties.nodes;
+        var clickedNodes = nodes.get(ids);
+        $.each(ids, function (index, val) {
+            alert("Clicked on "+ val);
+        });
+    });

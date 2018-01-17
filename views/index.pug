@@ -10,138 +10,22 @@ html(lang='en')
 
     title IDP
 
+    //Core Css like Bootstrap, Font-Awesome and VISJS
     include includes/css/core.pug
-
-    // Page level plugin CSS
-    link(href='vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
-    link(href='vendor/font-awesome/css/font-awesome.min.css', rel='stylesheet')
-    link(href='vendor/datatables/dataTables.bootstrap4.css', rel='stylesheet')
-    link(href='https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css', rel='stylesheet')
-    link(rel='stylesheet', href='/stylesheets/sb-admin.css')
-
+    // Addtional CSS file for adding custom CSS.
     include includes/css/custom.pug
 
-  body#page-top.fixed-nav.sticky-footer.bg-dark
+  body#page-top
+    //Navbar
     include includes/navbar.pug
+
+    //Body Code
     .content-wrapper
       .container-fluid
-        // Breadcrumbs
-        ol.breadcrumb
-          li.breadcrumb-item
-            a(href='#') Dashboard
-          li.breadcrumb-item.active My Dashboard
         // Node-Visualization
-        .container
-            div#mynetwork
-        .row
-          .col-xl-6.col-sm-6.mb-3
-            .card.text-white.bg-success.o-hidden.h-100
-              .card-body
-                .card-body-icon
-                  i.fa.fa-fw.fa-thumbs-up
-                .mr-5
-                  | 8 Gateway Good Health!
-              a.card-footer.text-white.clearfix.small.z-1(href='#')
-                span.float-left View Details
-                span.float-right
-                  i.fa.fa-angle-right
-          .col-xl-6.col-sm-6.mb-3
-            .card.text-white.bg-danger.o-hidden.h-100
-              .card-body
-                .card-body-icon
-                  i.fa.fa-fw.fa-thumbs-down
-                .mr-5
-                  | 2 Gateway Critical Health!
-              a.card-footer.text-white.clearfix.small.z-1(href='#')
-                span.float-left View Details
-                span.float-right
-                  i.fa.fa-angle-right
-        // Area Chart Example
-        .card.mb-3
-          .card-header
-            i.fa.fa-area-chart
-            |  Temperature Chart Example
-          .card-body
-            canvas#myAreaChart(width='100%', height='30')
-          .card-footer.small.text-muted
-            | Updated now at 11:59 AM
-        .row
-          .col-lg-8
-            // Example Bar Chart Card
-            .card.mb-3
-              .card-header
-                i.fa.fa-bar-chart
-                |  Messages Count
-              .card-body
-                .row
-                  .col-sm-12.my-auto
-                    canvas#myBarChart(width='100', height='50')
-              .card-footer.small.text-muted
-                | Updated now at 11:59 AM
-            // Card Columns Example Social Feed
-            // /Card Columns
-          .col-lg-4
-            // Example Pie Chart Card
-            .card.mb-3
-              .card-header
-                i.fa.fa-pie-chart
-                |  Message Distribution Chart
-              .card-body
-                canvas#myPieChart(width='100%', height='100')
-              .card-footer.small.text-muted
-                | Updated yesterday at 11:59 PM
-      // /.container-fluid
-      // /.content-wrapper
+        div#mynetwork
 
       include includes/footer.pug
 
-      include includes/scroll-to-top.pug
-
-      include includes/modals/logout.pug
-
       include includes/js/core.pug
-
-      // Page level plugin JavaScript
-      script(src='vendor/chart.js/Chart.min.js')
-      script(src='vendor/datatables/jquery.dataTables.js')
-      script(src='vendor/datatables/dataTables.bootstrap4.js')
-
-      include includes/js/custom.pug
-
-      // Custom scripts for this page
-      script(src='js/sb-admin-datatables.min.js')
-      script(src='js/sb-admin-charts.min.js')
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js')
-
-      script(type='text/javascript').
-          // Pass as regular array here
-          var nodes = new vis.DataSet(JSON.parse('!{nodes}'));
-          var edges = new vis.DataSet(JSON.parse('!{edges}'));
-          var container = document.getElementById('mynetwork');
-          var data = {
-              nodes: nodes,
-              edges: edges
-          };
-          var options = {
-              interaction: {
-                  dragNodes: false,
-                  dragView: false,
-              },
-              autoResize: false,
-              height: '400px',
-              layout: {
-                  hierarchical: {
-                      direction: 'LR',
-                  }
-              },
-              edges: {
-                smooth: {
-                    type: 'cubicBezier',
-                    forceDirection: 'LR',
-                    roundness: 0.3
-                  }
-              },
-          };
-          var network = new vis.Network(container, data, options);
-          console.log(nodes);
-          console.log(edges);
+      include includes/js/nodemapping.pug
