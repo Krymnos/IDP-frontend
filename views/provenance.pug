@@ -1,0 +1,30 @@
+doctype html
+html(lang='en')
+
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(name='description', content='')
+        meta(name='author', content='')
+
+        title IDP
+
+        //Core Css like Bootstrap, Font-Awesome and VISJS
+        include includes/css/core.pug
+        // Addtional CSS file for adding custom CSS.
+        include includes/css/custom.pug
+
+    body#page-top
+        //Navbar
+        include includes/navbar.pug
+
+        //Body Code
+        .content-wrapper
+            .container-fluid
+                // Node-Visualization
+                #{data}
+
+            include includes/footer.pug
+
+            include includes/js/core.pug
