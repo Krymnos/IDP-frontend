@@ -1,39 +1,84 @@
 // Custom scripts for all pages
 script(type='text/javascript').
     // Pass as regular array here
-    var nodes = new vis.DataSet(JSON.parse('!{nodes}'));
-    var edges = new vis.DataSet(JSON.parse('!{edges}'));
-    var container = document.getElementById('mynetwork');
-    var data = {
-        nodes: nodes,
-        edges: edges
-    };
-    var options = {
-        interaction: {
-            dragNodes: false,
-            dragView: false,
-        },
-        autoResize: false,
-        height: '400px',
-        layout: {
-            hierarchical: {
-                direction: 'LR',
-            }
-        },
-        edges: {
-            smooth: {
-                type: 'cubicBezier',
-                forceDirection: 'horizontal',
-                roundness: 0.3
-            }
-        },
-    };
-    var network = new vis.Network(container, data, options);
 
-    network.on('click', function (properties) {
-        var ids = properties.nodes;
-        var clickedNodes = nodes.get(ids);
-        $.each(ids, function (index, val) {
-            alert("Clicked on "+ val);
+
+    // (function worker() {
+    //     $.ajax({
+    //         url: '/fetchstats',
+    //         success: function (data) {
+    //             createNode(JSON.parse(data));
+    //         },
+    //         complete: function () {
+    //             // Schedule the next request when the current one's complete
+    //             setTimeout(worker, 60000);
+    //         }
+    //     });
+    // })();
+
+
+    //function createNode(stats) {
+
+        var nodes = new vis.DataSet(JSON.parse('!{nodes}'));
+        var edges = new vis.DataSet(JSON.parse('!{edges}'));
+        var container = document.getElementById('mynetwork');
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var options = {
+            nodes: {borderWidth: 2},
+            interaction: {
+                dragNodes: true,
+                dragView: true,
+            },
+            autoResize: true,
+            height: '650px',
+            layout: {
+                hierarchical: {
+                    direction: 'RL',
+                }
+            },
+            edges: {
+                smooth: {
+                    type: 'cubicBezier',
+                    forceDirection: 'horizontal',
+                    roundness: 0.3
+                }
+            },
+        };
+        var network = new vis.Network(container, data, options);
+
+        network.on('click', function (properties) {
+            var ids = properties.nodes;
+            var clickedNodes = nodes.get(ids);
+            $.each(ids, function (index, val) {
+                var node_id = val;
+                $('#table').DataTable({
+                    "bFilter": false,
+                    "destroy": true,
+                    "paging": false,
+                    "ordering": false,
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": '/fetchdatapoints/'+val,
+                    "columns": [
+                        {"data": "no"},
+                        {"data": "id"},
+                        {"data": "location"},
+                        {"data": "lineNo"},
+                        {"data": "appName"},
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                console.log(data);
+                                return '<a class="btn btn-info btn-sm" href=/provenance/' + data.id + '>' + 'Lineage' + '</a> <a class="btn btn-info btn-sm" href=/' + data.id + '>' + 'Download JSON' + '</a>';
+                            }
+                        }
+                    ]
+                });
+            });
         });
-    });
+    //}
+
