@@ -1,1 +1,9 @@
+sudo: true
 language: node_js
+
+deploy:
+  provider: script
+  script: ./deploy_docker.sh
+  skip_cleanup: true
+  on:
+    branch: deployment
