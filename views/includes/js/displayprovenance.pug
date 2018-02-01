@@ -1,0 +1,43 @@
+// Custom scripts for all pages
+script(type='text/javascript').
+
+
+
+    //function createNode(stats) {
+
+    var nodes = new vis.DataSet(JSON.parse('!{nodes}'));
+    var edges = new vis.DataSet(JSON.parse('!{edges}'));
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {
+        nodes: {borderWidth: 2},
+        autoResize: true,
+        height: '650px',
+        layout: {
+            hierarchical: {
+                direction: 'LR',
+            }
+        },
+        edges: {
+            smooth: {
+                type: 'cubicBezier',
+                forceDirection: 'horizontal',
+                roundness: 0.3
+            }
+        },
+        interaction: {
+            dragNodes: true,
+            dragView: true,
+            hover: true,
+            navigationButtons: true,
+            keyboard: true,
+            zoomView: false,
+            hoverConnectedEdges:true
+        }
+    };
+    var network = new vis.Network(container, data, options);
+    //}
+

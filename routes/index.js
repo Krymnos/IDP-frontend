@@ -103,9 +103,18 @@ router.get('/fetchdatapoints/:id',function(req,res,next){
 });
 
 router.get('/provenance/:id',function(req,res,next){
-    axios.get(url+'/provenance/'+req.params.id)
+    axios.get(url+'/provenance/'+req.params.id+"?structure=linear")
         .then(response => {
-            res.render('provenance', { title: 'Express',data: JSON.stringify(response.data)});
+            let list = response.data;
+            let nodes = [];
+            let edges = [];
+            list.forEach(x => {
+                if(x.inputDatapoints != undefined) {
+                    nodes.push({id:x.id,label:x.context.hostId, title:"Contribution:"+x.inputDatapoints[0].contribution+"\\nLocation:"+x.context.loc.lable+"\\nLineNo:"+x.context.lineNo});
+                    edges.push({from: x.id, to: x.inputDatapoints[0].dp.id, arrows: 'to'});
+                }
+            });
+            res.render('provenance', { title: req.params.id,nodes: JSON.stringify(nodes), edges:JSON.stringify(edges)});
     }).catch(error =>{
         console.log(error);
     });
