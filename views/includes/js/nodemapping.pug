@@ -21,6 +21,7 @@ script(type='text/javascript').
 
         var nodes = new vis.DataSet(JSON.parse('!{nodes}'));
         var edges = new vis.DataSet(JSON.parse('!{edges}'));
+        var baseURL = JSON.parse('!{baseURL}');
         var container = document.getElementById('mynetwork');
         var data = {
             nodes: nodes,
@@ -46,12 +47,19 @@ script(type='text/javascript').
                     roundness: 0.3
                 }
             },
+            interaction: {
+                navigationButtons: true,
+                keyboard: true,
+                zoomView: false,
+                hoverConnectedEdges:true
+            }
         };
         var network = new vis.Network(container, data, options);
 
         network.on('click', function (properties) {
             var ids = properties.nodes;
             var clickedNodes = nodes.get(ids);
+            $('#table').DataTable().clear();
             $.each(ids, function (index, val) {
                 var node_id = val;
                 $('#table').DataTable({
@@ -68,12 +76,16 @@ script(type='text/javascript').
                         {"data": "location"},
                         {"data": "lineNo"},
                         {"data": "appName"},
+                        {"data": "className"},
+                        {"data": "created"},
+                        {"data": "sent"},
+                        {"data": "received"},
                         {
                             "mData": null,
                             "bSortable": false,
                             "mRender": function (data, type, full) {
                                 console.log(data);
-                                return '<a class="btn btn-info btn-sm" href=/provenance/' + data.id + '>' + 'Lineage' + '</a> <a class="btn btn-info btn-sm" href=/' + data.id + '>' + 'Download JSON' + '</a>';
+                                return '<a class="btn btn-info btn-sm" href=/provenance/' + data.id + '>' + 'Lineage' + '</a> <a class="btn btn-info btn-sm" href=' +baseURL+"/provenance/"+data.id + '/static?structure=linear>' + 'Download Linear Structure JSON' + '</a>';
                             }
                         }
                     ]
