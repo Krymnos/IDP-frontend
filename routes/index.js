@@ -115,7 +115,7 @@ router.get('/provenance/:id',function(req,res,next){
             let edges = [];
             list.forEach(x => {
                 if(x.context != undefined) {
-                    nodes.push({id:x.context.hostId,label:x.context.hostId, title:"Line No:"+x.context.lineNo+"\\nAppName:"+x.context.appName+"\\nClassName:"+x.context.className+"\\nsendTime:"+x.context.sendTime+"\\nreceiveTime:"+x.context.receiveTime+"\\nmeterId:"+x.context.meterId+"\\nmetricId:"+x.context.metricId});
+                    nodes.push({id:x.context.hostId,label:x.context.hostId, title:"\\nLine No:"+x.context.lineNo+"\\nAppName:"+x.context.appName+"\\nClassName:"+x.context.className+"\\nsendTime:"+x.context.sendTime+"\\nreceiveTime:"+x.context.receiveTime+"\\nmeterId:"+x.context.meterId+"\\nmetricId:"+x.context.metricId});
                     edges.push({from: x.context.hostId, to: x.successor, arrows: 'to'});
                 }
             });
@@ -131,7 +131,8 @@ router.get('/querycli/:id',function(req,res,next){
     axios.post(url+'/provenance/',{query: req.params.id})
         .then(response=> {
         var list = response.data;
-        if(list.error == "true"){
+        console.log(list);
+        if(list.error == true){
             res.send(JSON.stringify(false));
         }else {
             var result = {};

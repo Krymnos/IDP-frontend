@@ -64,8 +64,10 @@ script(type='text/javascript').
         $("#queryraw").click(function (e) {
             e.preventDefault();
             var t = window.editor.getValue();
+            $('#raw').empty();
             $('#raw').show();
             $('#table').hide();
+            $('#table_wrapper').hide();
             $.ajax({
                 url: "/querycli/" + t,
                 success: function (data) {

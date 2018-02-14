@@ -5,6 +5,7 @@ script(src='../vendor/datatables/jquery.dataTables.js')
 script(src='../vendor/datatables/dataTables.bootstrap4.js')
 script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js')
 script(src='https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js')
+script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js')
 script(type='text/javascript').
 
 
@@ -43,13 +44,23 @@ script(type='text/javascript').
         interaction: {
             dragNodes: true,
             dragView: true,
-            hover: true,
+            hover: false,
             navigationButtons: true,
             keyboard: true,
             zoomView: false,
-            hoverConnectedEdges:true
+            hoverConnectedEdges:false
         }
     };
     var network = new vis.Network(container, data, options);
+
+    network.on('click', function (properties) {
+        var ids = properties.nodes;
+        var clickedNodes = nodes.get(ids);
+        if(clickedNodes[0].title != undefined){
+            $("#dialog").html("<p>"+clickedNodes[0].title+"</p>");
+            $("#dialog").dialog({"title":clickedNodes[0].label});
+
+        }
+    });
     //}
 
