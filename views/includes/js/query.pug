@@ -1,0 +1,82 @@
+script(src='http://codemirror.net/lib/codemirror.js')
+script(src='http://codemirror.net/mode/sql/sql.js')
+script(src='http://codemirror.net/addon/hint/show-hint.js')
+script(src='http://codemirror.net/addon/hint/sql-hint.js')
+script(src='/javascripts/renderJson.js')
+
+script(type='text/javascript').
+    $(function () {
+        $('#table').hide();
+        $('#raw').hide();
+        var mime = 'text/x-cassandra';
+        // get mime type
+        if (window.location.href.indexOf('mime=') > -1) {
+            mime = window.location.href.substr(window.location.href.indexOf('mime=') + 5);
+        }
+        window.editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+            mode: mime,
+            indentWithTabs: true,
+            smartIndent: true,
+            lineNumbers: true,
+            matchBrackets: true,
+            autofocus: true,
+            htmlMode: true,
+            lineWrapping: true,
+            addModeClass: true,
+            extraKeys: {"Ctrl-Space": "autocomplete"},
+            hintOptions: {
+                tables: {
+                    users: ["name", "score", "birthDate"],
+                    countries: ["name", "population", "size"]
+                }
+            }
+        });
+
+        $("#querytable").click(function (e) {
+            e.preventDefault();
+            var t = window.editor.getValue();
+            $('#raw').hide();
+            $('#table').show();
+            $('#table').DataTable().clear();
+            $('#table').DataTable({
+                "bFilter": false,
+                "destroy": true,
+                "paging": false,
+                "ordering": false,
+                "processing": true,
+                "serverSide": true,
+                "ajax": '/querycli/' + t,
+                "columns": [
+                    {"data": "no"},
+                    {"data": "id"},
+                    {"data": "location"},
+                    {"data": "lineNo"},
+                    {"data": "appName"},
+                    {"data": "className"},
+                    {"data": "created"},
+                    {"data": "sent"},
+                    {"data": "received"}
+                ]
+            });
+
+        });
+
+        $("#queryraw").click(function (e) {
+            e.preventDefault();
+            var t = window.editor.getValue();
+            $('#raw').show();
+            $('#table').hide();
+            $.ajax({
+                url: "/querycli/" + t,
+                success: function (data) {
+                    var response = jQuery.parseJSON(JSON.stringify(data));
+                    console.log(response);
+                    document.getElementById("raw").appendChild(renderjson(data));
+                },
+                error: function (error) {
+                    return false;
+                }
+            });
+        });
+    });
+

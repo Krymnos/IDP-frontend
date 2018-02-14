@@ -1,0 +1,53 @@
+doctype html
+html(lang='en')
+
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(name='description', content='')
+        meta(name='author', content='')
+
+        title IDP
+
+        //Core Css like Bootstrap, Font-Awesome and VISJS
+        include includes/css/core.pug
+        // Addtional CSS file for adding custom CSS.
+        include includes/css/custom.pug
+        include includes/css/query.pug
+
+    body#page-top
+        //Navbar
+        include includes/navbar.pug
+
+        //Body Code
+        .content-wrapper
+            .container-fluid
+                form#query-form
+                    .row
+                        div.col-lg-12
+                            div.form-group
+                                textarea#code.form-control.input-lg(name="code")
+                    .row
+                        div.form-group.col-sm-3
+                            button#querytable.btn.btn-info(type='submit') Run Query (Table)
+                            button#queryraw.btn.btn-info(type='submit') Run Query (Raw)
+
+
+            .container-fluid
+                div#raw
+                table#table.table.table-hover.table-striped.table-bordered
+                    thead
+                        tr
+                            th #
+                            th Provenance ID
+                            th Location
+                            th Line Number
+                            th App Name
+                            th Class Name
+                            th Created Time
+                            th Sent Time
+                            th Received Time
+
+            include includes/js/core.pug
+            include includes/js/query.pug

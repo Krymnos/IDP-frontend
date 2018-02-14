@@ -18,7 +18,7 @@ script(type='text/javascript').
 
 
     //function createNode(stats) {
-
+        $('#table').hide();
         var nodes = new vis.DataSet(JSON.parse('!{nodes}'));
         var edges = new vis.DataSet(JSON.parse('!{edges}'));
         var baseURL = JSON.parse('!{baseURL}');
@@ -46,6 +46,7 @@ script(type='text/javascript').
             interaction: {
                 dragNodes: true,
                 dragView: true,
+                hover: true,
                 navigationButtons: true,
                 keyboard: true,
                 zoomView: false,
@@ -57,6 +58,7 @@ script(type='text/javascript').
         network.on('click', function (properties) {
             var ids = properties.nodes;
             var clickedNodes = nodes.get(ids);
+            $('#table').show();
             $('#table').DataTable().clear();
             $.each(ids, function (index, val) {
                 var node_id = val;

@@ -1,4 +1,10 @@
 // Custom scripts for all pages
+script(src='../vendor/jquery/jquery.min.js')
+script(src='../vendor/jquery-easing/jquery.easing.min.js')
+script(src='../vendor/datatables/jquery.dataTables.js')
+script(src='../vendor/datatables/dataTables.bootstrap4.js')
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js')
 script(type='text/javascript').
 
 
@@ -13,12 +19,18 @@ script(type='text/javascript').
         edges: edges
     };
     var options = {
-        nodes: {borderWidth: 2},
         autoResize: true,
         height: '650px',
         layout: {
             hierarchical: {
-                direction: 'LR',
+                direction: 'RL',
+            }
+        },
+        nodes: {
+            shape: 'box',
+            margin: 10,
+            widthConstraint: {
+                maximum: 200
             }
         },
         edges: {
