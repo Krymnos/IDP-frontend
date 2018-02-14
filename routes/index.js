@@ -115,7 +115,22 @@ router.get('/provenance/:id',function(req,res,next){
             let edges = [];
             list.forEach(x => {
                 if(x.context != undefined) {
-                    nodes.push({id:x.context.hostId,label:x.context.hostId, title:"\\nLine No:"+x.context.lineNo+"\\nAppName:"+x.context.appName+"\\nClassName:"+x.context.className+"\\nsendTime:"+x.context.sendTime+"\\nreceiveTime:"+x.context.receiveTime+"\\nmeterId:"+x.context.meterId+"\\nmetricId:"+x.context.metricId});
+                    if (x.context.timestamp != undefined) {
+                        created = moment.unix(x.context.timestamp / 1000).format("DD/MM/YYYY HH:mm:ss.SSS");
+                    } else {
+                        created = '';
+                    }
+                    if (x.context.sendTime != undefined) {
+                        sent = moment.unix(x.context.sendTime / 1000).format("DD/MM/YYYY HH:mm:ss.SSS");
+                    } else {
+                        sent = '';
+                    }
+                    if (x.context.receiveTime != undefined) {
+                        received = moment.unix(x.context.receiveTime / 1000).format("DD/MM/YYYY HH:mm:ss.SSS");
+                    } else {
+                        received = '';
+                    }
+                    nodes.push({id:x.context.hostId,label:x.context.hostId, title:"\\nLine No:"+x.context.lineNo+"\\nAppName:"+x.context.appName+"\\nClassName:"+x.context.className+"\\nCreatedTime:"+created+"\\nSendTime:"+sent+"\\nReceivedTime:"+received+"\\nMeter Id:"+x.context.meterId+"\\nMetricId:"+x.context.metricId});
                     edges.push({from: x.context.hostId, to: x.successor, arrows: 'to'});
                 }
             });
@@ -207,6 +222,21 @@ router.get('/querycli/:id',function(req,res,next){
         var result = {};
         result = {data: list};
         res.send(JSON.stringify(result));
+    }).catch(error => {
+            console.log(error);
+    });
+});
+
+router.get('/queryclicheck/:id',function(req,res,next){
+    axios.post(url+'/provenance/',{query: req.params.id})
+        .then(response=> {
+        var list = response.data;
+        console.log(list);
+        if(list.error == true){
+            res.send(JSON.stringify(false));
+        }else {
+            res.send(JSON.stringify(true));
+        }
     }).catch(error => {
             console.log(error);
     });

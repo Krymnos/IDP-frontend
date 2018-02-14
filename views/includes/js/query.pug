@@ -36,6 +36,32 @@ script(type='text/javascript').
             e.preventDefault();
             var t = window.editor.getValue();
             $('#raw').hide();
+            $.ajax({
+                url: "/queryclicheck/" + t,
+                success: function (data) {
+                    var response = jQuery.parseJSON(JSON.stringify(data));
+                    console.log(response);
+                    if(response == "true"){
+                        showTable(t);
+                    }else{
+                        $("#raw").empty();
+                        $("#table_wrapper").hide();
+                        $("#raw").show();
+                        $('#table').DataTable().clear();
+                        $('#table').hide();
+                        $('#raw').html("<p>Error</p>");
+                    }
+                },
+                error: function (error) {
+                    return false;
+                }
+            });
+
+        });
+
+
+        function showTable(t){
+            alert("in show");
             $('#table').show();
             $('#table').DataTable().clear();
             $('#table').DataTable({
@@ -58,8 +84,7 @@ script(type='text/javascript').
                     {"data": "received"}
                 ]
             });
-
-        });
+        }
 
         $("#queryraw").click(function (e) {
             e.preventDefault();
@@ -72,7 +97,6 @@ script(type='text/javascript').
                 url: "/querycli/" + t,
                 success: function (data) {
                     var response = jQuery.parseJSON(JSON.stringify(data));
-                    console.log(response);
                     document.getElementById("raw").appendChild(renderjson(data));
                 },
                 error: function (error) {
