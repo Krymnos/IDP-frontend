@@ -63,7 +63,6 @@ script(type='text/javascript').
 
 
         function showTable(t){
-            alert("in show");
             $('#table').show();
             $('#table').DataTable().clear();
             $('#table').DataTable({
@@ -98,8 +97,8 @@ script(type='text/javascript').
             $.ajax({
                 url: "/querycli/" + t,
                 success: function (data) {
-                    var response = jQuery.parseJSON(JSON.stringify(data));
-                    document.getElementById("raw").appendChild(renderjson(data));
+                    var obj = JSON.parse(data);
+                    document.getElementById("raw").innerHTML = JSON.stringify(obj, undefined, 2);
                 },
                 error: function (error) {
                     return false;
