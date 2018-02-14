@@ -146,7 +146,6 @@ router.get('/querycli/:id',function(req,res,next){
     axios.post(url+'/provenance/',{query: req.params.id})
         .then(response=> {
         var list = response.data;
-        console.log(list);
         if(list.error == true){
             res.send(JSON.stringify(false));
         }else {
@@ -231,7 +230,6 @@ router.get('/queryclicheck/:id',function(req,res,next){
     axios.post(url+'/provenance/',{query: req.params.id})
         .then(response=> {
         var list = response.data;
-        console.log(list);
         if(list.error == true){
             res.send(JSON.stringify(false));
         }else {

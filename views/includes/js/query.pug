@@ -6,6 +6,8 @@ script(src='/javascripts/renderJson.js')
 
 script(type='text/javascript').
     $(function () {
+        $("#home").removeClass("active");
+        $("#query").addClass("active");
         $('#table').hide();
         $('#raw').hide();
         var mime = 'text/x-cassandra';
