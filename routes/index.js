@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 var moment = require('moment');
-const url = "http://122.129.79.67:5000/v1";
+const url = "http://" + process.env.BACKEND_HOST + "/v1";
 /* GET home page. */
 router.get('/', function(req, res, next) {
     let list = {};

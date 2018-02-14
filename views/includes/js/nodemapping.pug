@@ -3,22 +3,23 @@ script(type='text/javascript').
     // Pass as regular array here
 
 
-    // (function worker() {
-    //     $.ajax({
-    //         url: '/fetchstats',
-    //         success: function (data) {
-    //             createNode(JSON.parse(data));
-    //         },
-    //         complete: function () {
-    //             // Schedule the next request when the current one's complete
-    //             setTimeout(worker, 60000);
-    //         }
-    //     });
-    // })();
+    (function worker() {
+        $.ajax({
+            url: '/fetchstats',
+            success: function (data) {
+                createNode(JSON.parse(data));
+            },
+            complete: function () {
+                // Schedule the next request when the current one's complete
+                setTimeout(worker, 30000);
+            }
+        });
+    })();
 
 
-    //function createNode(stats) {
+    function createNode(stats) {
         $('#table').hide();
+        $('#table_wrapper').hide();
         var nodes = new vis.DataSet(JSON.parse('!{nodes}'));
         var edges = new vis.DataSet(JSON.parse('!{edges}'));
         var baseURL = JSON.parse('!{baseURL}');
@@ -91,5 +92,5 @@ script(type='text/javascript').
                 });
             });
         });
-    //}
+    }
 
