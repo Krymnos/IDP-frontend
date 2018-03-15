@@ -77,9 +77,9 @@ To run those 3 commands you can just do
 
 ### CSS
 
-- [bootstrap](https://getbootstrap.com/) is used to write futureproof CSS for CSS vendor prefix under the hood).
+- [bootstrap](https://getbootstrap.com/) provides a set of stylesheets that provide basic style definitions for all key HTML components. These provide a uniform, modern appearance for formatting text, tables and form elements.
 
-### NodeVisualisation
+### Network Graph Library
 
 - [Visjs](http://visjs.org/) A dynamic, browser based visualization library. The library is designed to be easy to use, to handle large amounts of dynamic data, and to enable manipulation of and interaction with the data. This library enabled use to visualize the nodes in the pipeline. and it was represented as DAG (Directed Arrow Graph). This library is licenses under Apache 4.0 and MIT
 
