@@ -66,14 +66,10 @@ To run those 3 commands you can just do
 ## Languages & tools
 
 ### Framework
-- [Express](https://expressjs.com/) Express is a fast, un-opinionated, minimalist web application framework for Node.js. It is designed for building web applications and is the de facto standard server framework for Node.js.
+- [Express](https://expressjs.com/) is a fast, un-opinionated, minimalist web application framework for Node.js. It is designed for building web applications and is the de facto standard server framework for Node.js.
 ### HTML
 
 - [Pug](https://pugjs.org/) It is View-Engine templating.
-
-### JavaScript
-
-- [JSHint](http://www.jshint.com/docs/) is used to prevent JavaScript error.
 
 ### CSS
 
